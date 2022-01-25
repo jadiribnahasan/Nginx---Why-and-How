@@ -28,6 +28,8 @@ NGINX also helps in setting up a secured connection between your data-centers an
 
 ![alt text](./res/images/0_m_Rey9rU_HIi674J.jpg)
 
+The basic nginx architecture consists of a master process and its workers. The master is supposed to read the configuration file and maintain worker processes, while workers do the actual processing of requests.[^3]
+
 Nginx spawns worker processes, each of which can handle thousands of connections. The worker processes accomplish this by implementing a fast looping mechanism that continuously checks for and processes events. Decoupling actual work from connections allows each worker to concern itself with a connection only when a new event has been triggered.
 
 NGINX is faster in static content delivery while staying relatively lighter on resources because it doesn't embed a dynamic programming language processor. When a request for static content comes, NGINX simply responds with the file without running any additional processes.
@@ -38,7 +40,7 @@ That doesn't mean that NGINX can't handle requests that require a dynamic progra
 
 **How to Nginx?** 
 
-To understand how NGINX works, we need to understand the important NGINX directories and commands.
+To understand how NGINX works, we need to understand the important NGINX **directories** and **commands**.
 
 * NGINX files and directories
   * **_/etc/nginx/_**
@@ -47,7 +49,44 @@ To understand how NGINX works, we need to understand the important NGINX directo
     * The _/etc/nginx/nginx.conf_ file is the default configuration entry point used by the NGINX service. This configuration file sets up global settings for things like worker process, tuning, logging, loading dynamic modules, and references to other NGINX configuration files. In a default configuration, the /etc/nginx/nginx.conf file includes the top-level http block, or context, which includes all configuration files in the directory described next.
   * **_/etc/nginx/conf.d/_**
     * The _/etc/nginx/conf.d/_ directory contains the default HTTP server configuration file. Files in this directory ending in .conf are included in the top-level http block from within the _/etc/nginx/nginx.conf_ file. It’s best practice to utilize include statements and organize your configuration in this way to keep your configuration files concise.
+
+* Commands
+  * `nginx -h`
+    * Shows the NGINX help menu.
+
+  * `nginx -v`
+    * Shows the NGINX version.
+
+  * `nginx -V`
+    * Shows the NGINX version, build information, and configuration arguments, which shows the modules built into the NGINX binary.
+
+  * `nginx -t`
+    * Tests the NGINX configuration.
+
+  * `nginx -T`
+    * Tests the NGINX configuration and prints the validated configuration to the screen. This command is useful when seeking support.
+
+  * ```
+      nginx -s
+      nginx -s reload
+    ```
+    * The -s flag sends a signal to the NGINX master process. You can send signals such as **stop**, **quit**, **reload** , and **reopen** . The stop signal discontinues the NGINX process immediately. The quit signal stops the NGINX process after it finishes processing inflight requests. The reload signal reloads the configuration. The reopen signal instructs NGINX to reopen logfiles.
+
+* Directives and Contexts[^4]
+
+  * Technically, everything written inside a NGINX configuration file is a directive. Directives are of two types:
+    * Simple Directives
+    * Block Directives
   
+
+
+* Serving static content
+
+* Setting Nginx as reverse proxy
+
+* Load balancing
 
 [^1]: https://en.wikipedia.org/wiki/C10k_problem
 [^2]: https://www.nginx.com/resources/glossary/reverse-proxy-server/
+[^3]: https://www.youtube.com/watch?v=i-8AISuZtN8
+[^4]: https://www-freecodecamp-org.cdn.ampproject.org/c/s/www.freecodecamp.org/news/the-nginx-handbook/amp/#how-to-understand-directives-and-contexts-in-nginx
