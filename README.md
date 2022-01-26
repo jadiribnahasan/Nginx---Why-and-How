@@ -77,6 +77,8 @@ To understand how NGINX works, we need to understand the important NGINX **direc
   * Technically, everything written inside a NGINX configuration file is a directive. Directives are of two types:
     * Simple Directives
     * Block Directives
+
+* Setup nginx with odoo
   
 
 
